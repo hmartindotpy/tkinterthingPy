@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk
+from tkinter import ttk
+from tkinter import *
 gui = tk.Tk()
 gui.geometry("400x300")
 window_width=400
@@ -15,13 +17,16 @@ gui.resizable(False,False)
 
 var = tk.IntVar()
 
-
+def save():
+    pass
+def load():
+    pass
 def checkbox():
-    if(var.get()==0):
-        c="not checked"
+    st = checkbox.state()
+    if 'selected' in st:
+        tkinter.messagebox.showinfo("info", "the checkbox is checked")
     else:
-        c="checked"
-    tkinter.messagebox.showinfo("info", "the checkbox is " + c)
+        tkinter.messagebox.showinfo("info", "the checkbox is not checked")
 
 #create controls and set properties
 w = tk.Label(text="Width:")
@@ -30,8 +35,29 @@ h = tk.Label(text="Height:")
 h_input = tk.Entry()
 z_in = tk.Button(text="Zoom in",command=checkbox)
 z_out = tk.Button(text="Zoom out")
-checkbox = tk.Checkbutton(text="Preserve",variable=var)
-p = tk.Canvas(width=50,height=50,bg="#00FF00")
+checkbox = ttk.Checkbutton(text="Preserve")
+p = tk.Canvas(width=50,height=50,bg="#FF0000")
+img = PhotoImage(file='C:/Users/361562/Desktop/square.png')
+p.create_image(0,0,anchor=NW,image=img)
+Var1 = StringVar()
+frame = Frame(gui)
+RBttn = Radiobutton(frame, text = "Option1", variable = Var1,
+                    value = 1)
+RBttn.grid(padx = 5, pady = 5)
+RBttn2 = Radiobutton(frame, text = "Option2", variable = Var1,
+                     value = 2)
+RBttn2.grid(padx = 5, pady = 5)
+mainmenu = Menu(frame)
+mainmenu.add_command(label = "Save", command= save)  
+mainmenu.add_command(label = "Load", command= load)
+mainmenu.add_command(label = "Exit", command= gui.destroy)
+vlist = ["Option1", "Option2", "Option3",
+          "Option4", "Option5"]
+ 
+Combo = ttk.Combobox(frame, values = vlist)
+Combo.set("Pick an Option")
+Combo.grid(padx = 5, pady = 5, row=5)
+gui.config(menu = mainmenu)
 
 w.grid(row=0, column=0, padx=10, pady=10)
 w_input.grid(row=0, column=1, pady=10)
